@@ -15,11 +15,12 @@ development, aging, and disease.
 
 Objectives
 ----------
+
 This and that...
 
 Features
 --------
 * Registration of x-ray micrographs
-* Reconstruction of full mouse brains
+* Reconstruction of full mouse brain microstructure
 * Segmentation of neurons and blood vessels
-* High-performace and automated processing workflows 
+* High-performace and automated data processing workflows 

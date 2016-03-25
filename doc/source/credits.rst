@@ -3,7 +3,6 @@ Credits
 
 Project Team
 ------------
-
 * Vincent De Andrade (`@vdeandrade`_)
 * Francesco De Carlo (`@decarlof`_)
 * Eva Dyer (`@evadyer`_)
@@ -14,6 +13,12 @@ Project Team
 * Mehdi Tondravi
 * Rafael Vescovi (`@ravescovi`_)
 * Xianghui Xiao (`@xianghuix`_)
+
+Sponsors
+--------
+* National Institute of Health
+* Department of Energy
+
 
 .. _`@vdeandrade`: https://github.com/vdeandrade
 .. _`@decarlof`: https://github.com/decarlof

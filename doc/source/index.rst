@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 ====================================
-XBrainMap: Brain Mapping with X-rays
+XBrainMap: Brain mapping with x-rays
 ====================================
 
 .. toctree::

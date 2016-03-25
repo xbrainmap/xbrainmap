@@ -10,4 +10,9 @@ XBrainMap: Brain mapping with x-rays
     :target: https://gitter.im/xbrainmap/xbrainmap
     :alt: Gitter Chat
 
-* Documentation: http://xbrainmap.rtfd.org
+Features
+--------
+* Registration of x-ray micrographs
+* Reconstruction of full mouse brain microstructure
+* Segmentation of neurons and blood vessels
+* High-performace and automated data processing workflows 
