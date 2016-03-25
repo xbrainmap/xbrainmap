@@ -15,6 +15,7 @@ XBrainMap: Brain Mapping with X-rays
    roadmap
    software
    tutorials
+   devguide
    credits
    references
 
