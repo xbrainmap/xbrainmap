@@ -1,5 +1,5 @@
 ====================================
-XBrainMap: Brain Mapping with X-rays
+XBrainMap: Brain mapping with x-rays
 ====================================
 
 .. image:: https://readthedocs.org/projects/xbrainmap/badge/?version=latest
@@ -11,5 +11,3 @@ XBrainMap: Brain Mapping with X-rays
     :alt: Gitter Chat
 
 * Documentation: http://xbrainmap.rtfd.org
-* GitHub: https://github.com/xbrainmap/xbrainmap
-* Free software: BSD-3 license
