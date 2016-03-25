@@ -17,8 +17,8 @@ Project Team
 
 .. _`@vdeandrade`: https://github.com/vdeandrade
 .. _`@decarlof`: https://github.com/decarlof
-.. _`@evadyer`: https://github.com/dgursoy
-.. _`@dgursoy`: https://github.com/maiksensi
+.. _`@evadyer`: https://github.com/evadyer
+.. _`@dgursoy`: https://github.com/dgursoy
 .. _`@altaskier`: https://github.com/altaskier
 .. _`@koerding`: https://github.com/koerding
 .. _`@ravescovi`: https://github.com/ravescovi
