@@ -16,8 +16,8 @@ Project Team
 * Xianghui Xiao (`@xianghuix`_)
 
 .. _`@decarlof`: https://github.com/decarlof
-.. _`@evadyer`: https://github.com/dgursoy
-.. _`@dgursoy`: https://github.com/maiksensi
+.. _`@evadyer`: https://github.com/evadyer
+.. _`@dgursoy`: https://github.com/dgursoy
 .. _`@altaskier`: https://github.com/altaskier
 .. _`@ravescovi`: https://github.com/ravescovi
 .. _`@xianghuix`: https://github.com/xianghuix
