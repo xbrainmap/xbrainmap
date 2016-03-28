@@ -8,7 +8,7 @@ Project Team
 * Eva Dyer (`@evadyer`_)
 * Doga Gursoy (`@dgursoy`_)
 * Chris Jacobsen (`@altaskier`_)
-* Bobby Kasthuri
+* Bobby Kasthuri (`@bobbykasthuri`_)
 * Konrad Kording (`@koerding`_)
 * Mehdi Tondravi (`@anlmehdi`_)
 * Rafael Vescovi (`@ravescovi`_)
@@ -25,6 +25,7 @@ Sponsors
 .. _`@evadyer`: https://github.com/evadyer
 .. _`@dgursoy`: https://github.com/dgursoy
 .. _`@altaskier`: https://github.com/altaskier
+.. _`@bobbykasthuri`: https://github.com/bobbykasthuri
 .. _`@koerding`: https://github.com/koerding
 .. _`@anlmehdi`: https://github.com/anlmehdi
 .. _`@ravescovi`: https://github.com/ravescovi
