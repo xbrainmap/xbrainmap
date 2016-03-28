@@ -9,7 +9,7 @@ XBrainMap
 .. image:: https://badges.gitter.im/Join Chat.svg
     :target: https://gitter.im/xbrainmap/xbrainmap
     :alt: Gitter Chat
-    
+
 Software for obtaining brain mapping from x-ray measurements.
 
 Features
@@ -23,7 +23,7 @@ Features
 Installation
 ------------
 
-Install by running:
+Install xbrainmap by running:
 
     conda install -c xbrainmap xbrainmap
     
@@ -38,7 +38,7 @@ Support
 -------
 
 If you are having issues, please let us know.
-We have a mailing list located at: xbrainmap@googlegroups.com
+We have a mailing list: xbrainmap@googlegroups.com
 
 License
 -------
