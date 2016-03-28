@@ -72,7 +72,7 @@ master_doc = 'index'
 # General information about the project.
 argonne = u'Argonne National Laboratory'
 project = u'XBrainMap'
-copyright = u'2013-2015, ' + argonne
+copyright = u'2016, ' + argonne
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
