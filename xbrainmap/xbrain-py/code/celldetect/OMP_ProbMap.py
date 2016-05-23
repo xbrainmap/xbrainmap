@@ -72,7 +72,7 @@ def OMP_ProbMap(Prob, ptr, presid, startsz, dilatesz, kmax):
         ptest = val/np.sum(Dict, axis=0)
         
         if ptest < presid:
-            return
+            return(Centroids, Nmap)
         
         Nmap[xid] = newid
         newid = newid + 1
@@ -87,7 +87,7 @@ def OMP_ProbMap(Prob, ptr, presid, startsz, dilatesz, kmax):
         print('Iter remaining = ', (kmax - ktot - 1), 'Correlation = ', ptest )
         pdb.set_trace()
         
-    return
+    return(Centroids, Nmap)
 
 
 '''
