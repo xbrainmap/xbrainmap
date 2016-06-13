@@ -47,7 +47,7 @@
 # #########################################################################
 
 """
-Module for functions related to placing an iput 3D template at a fixed position in a bounding box.
+Module for creating a sphere as a structuring element.
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -55,88 +55,37 @@ from __future__ import (absolute_import, division, print_function,
 
 import numpy as np
 
-__author__ = "Eva Dyer"
-__credits__ = "Mehdi Tondravi"
+__author__ = "Mehdi Tondravi"
+__credits__ = "Eva Dyer"
 
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
-__all__ = ['roundno',
-           'placeatom',
-           'compute3dvec']
+__all__ = ['ball',
+           'strel3d']
 
 
-def roundno(no):
+def ball(radius, dtype=np.uint8):
     
     """
-    python rounds to the nearest even value. For exampl (12.5) returns 12. But in matlab
-    round(12.5) returns 13. This function is to have the same behavior as in matlab code. Inconsistency
-    is only if the number ends with ".5".
-    """
+    Function (ball) is from skimage.morphology with only one line changed;
     
-    return int(no // 1 + ((no % 1) / 0.5) // 1)
+    Changed from:
+    n = 2 * radius + 1
+    
+    To:
+    n = 2 * radius
+    
+    With this change Structural Element (SE) ball dimensions are the same as the SE generated 
+    by Matlabcode.
+    """
 
-def placeatom(vec, Lbox, which_loc, stacksz):
-    
-    """
-    Parameters
-    ----------
-    vec : ndarray
-        Nx1 array
-    Lbox : int
-        Lenght
-    which_loc : int
-        location to place atom
-    stacksz : ndarry
-        shape of the array (3D)
-    
-    Returns
-    -------
-    ndarray
-    """
-    tmp = np.zeros((stacksz))
-    #Convert flat index to indices 
-    r,c,z = np.unravel_index(which_loc, (stacksz)) 
-    tmp[r, c, z] = 1
-    
-    # Increase every dimension by Lbox before, Lbox after each dimension and fill them with zeros
-    tmp = np.lib.pad(tmp, ((Lbox, Lbox), (Lbox, Lbox), (Lbox, Lbox)), 'constant', constant_values=(0, 0))
-    # get the indices of the nonzero element 
-    center_loc = np.nonzero(tmp)
-    Lbox_half = roundno(Lbox / 2)
-    
-    tmp[center_loc[0] - Lbox_half + 1:center_loc[0] + Lbox_half, \
-            center_loc[1] - Lbox_half + 1:center_loc[1] + Lbox_half, \
-            center_loc[2] - Lbox_half + 1:center_loc[2] + Lbox_half] = \
-            np.reshape(vec, (Lbox, Lbox, Lbox))
-    return(tmp)
+    n = 2 * radius
+    Z, Y, X = np.mgrid[-radius:radius:n * 1j,
+                       -radius:radius:n * 1j,
+                       -radius:radius:n * 1j]
+    s = X ** 2 + Y ** 2 + Z ** 2
+    return np.array(s <= radius * radius, dtype=dtype)
 
-
-def compute3dvec(vec,which_loc,Lbox,stacksz):
-    
-    """
-    Parameters
-    ----------
-    vec : ndarray
-        Nx1 array
-    Lbox : int
-        Lenght
-    which_loc : int
-        location to place atom
-    stacksz : ndarry
-        shape of the array (3D)
-    
-    Returns
-    -------
-    ndarray
-    """
-    
-    tmp = placeatom(vec, Lbox, which_loc, stacksz)
-    
-    #delete the first Lbox R, C and Z 
-    x,y,z = np.shape(tmp)
-    tmp = tmp[Lbox:x, Lbox:y, Lbox:z]
-
-    #delete the last Lbox R, C and Z
-    x,y,z = np.shape(tmp)
-    tmp = tmp[0:(x-Lbox), 0:(y-Lbox), 0:(z-Lbox)]
-    return(tmp)
+def strel3d(sesize):
+    strel_sphere = ball(int(sesize/2))
+    return(strel_sphere)
