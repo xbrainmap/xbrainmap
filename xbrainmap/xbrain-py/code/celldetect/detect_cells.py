@@ -56,10 +56,8 @@ from __future__ import (absolute_import, division, print_function,
 
 # following imports to be updated when directory structure are finalized 
 from create_synth_dict import create_synth_dict
-from placeatom import roundno
-from convn_fft import convn_fft
 from compute3dvec import compute3dvec
-
+from scipy import signal
 import numpy as np
 
 import logging
@@ -71,95 +69,102 @@ __credits__ = "Mehdi Tondravi"
 
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
-__all__ = ['OMP_ProbMap']
+__all__ = ['detect_cells']
 
 
-
-def OMP_ProbMap(Prob, ptr, presid, startsz, dilatesz, kmax):
+def detect_cells(cell_probability, probability_threshold, stopping_criterion, 
+                initial_template_size, dilation_size, max_no_cells):
     
     """
-    This is the top level function is to infer the position (and eventually size) of all cells in a 3D volume of 
-    image data. We assume that we already have computed a "probability map" which encodes the probability that 
-    each voxel corresponds to a cell body.
+    This is the top level function to infer the position (and eventually size) of all cells in a 3D 
+    volume of image data. We assume that we already have computed a "probability map" which encodes 
+    the probability that each voxel corresponds to a cell body.
     
     Parameters 
     ----------
-    Prob : ndarray
-        Nr x Nc x Nz matrix which contains the probability of each voxel being a cell body. (i.e., 
-        the (r,c,z) position of Prob contains the probability that the (r,c,z) voxel of an image cube lies 
-        within a cell body.)
-    ptr : float
-        threshold between (0,1) to apply to probability map (only consider voxels for which Prob(r,c,z) > ptr)
-    presid : float
-        stopping criterion is a value between (0,1) (minimum normalized correlation between template and 
-        probability map) (Example = 0.47)
-    startsz : int
+    cell_probability : ndarray
+        Nr x Nc x Nz matrix which contains the probability of each voxel being a cell body. 
+    
+    probability_threshold : float
+        threshold between (0,1) to apply to probability map (only consider voxels for which 
+        cell_probability(r,c,z) > probability_threshold)
+    stopping_criterion : float
+        stopping criterion is a value between (0,1) (minimum normalized correlation between 
+        template and probability map) (Example = 0.47)
+    initial_template_size : int
         initial size of spherical template (to use in sweep)
-    dilatesz : int
-        size to increase mask around each detected cell (zero out sphere of radius startsz+dilatesz around 
-        each centroid)
-    kmax : int
+    dilation_size : int
+        size to increase mask around each detected cell (zero out sphere of radius with 
+        initial_template_size+dilation_size around each centroid)
+    max_no_cells : int
         maximum number of cells (alternative stopping criterion)
         
     Returns
     -------
     ndarray
-        Centroids = D x 4 matrix, where D = number of detected cells.
-        The (x,y,z) coordinate of each cell are contained in columns 1-3.
+        centroids = D x 4 matrix, where D = number of detected cells.
+        The (x,y,z) coordinate of each cell are in columns 1-3.
         The fourth column contains the correlation (ptest) between the template
         and probability map and thus represents our "confidence" in the estimate.
-        The algorithm terminates when ptest<=presid.
+        The algorithm terminates when ptest<=stopping_criterion.
     ndarray
-        Nmap = Nr x Nc x Nz matrix containing labeled detected cells (1,...,D)
+        new_map = Nr x Nc x Nz matrix containing labeled detected cells (1,...,D)
     """
     
     # threshold probability map. 
-    newtest = (Prob * (Prob > ptr)).astype('float32')
-    #startsz is an int now but could a vector later on - convert it to an array 
-    startsz = np.atleast_1d(startsz)  
+    newtest = (cell_probability * (cell_probability > probability_threshold)).astype('float32')
+    #initial_template_size is an int now but could a vector later on - convert it to an array 
+    initial_template_size = np.atleast_1d(initial_template_size)  
     
     # create dictionary of spherical templates
-    box_radius = np.ceil(np.max(startsz)/2) + 1
-    Dict = create_synth_dict(startsz, box_radius)
-    Ddilate = create_synth_dict(startsz + dilatesz, box_radius)
-    Lbox = roundno(np.shape(Dict)[0] ** (1/3))
-    Nmap = np.zeros((np.shape(Prob)))
+    box_radius = np.ceil(np.max(initial_template_size)/2) + 1
+    dict = create_synth_dict(initial_template_size, box_radius)
+    dilate_dict = create_synth_dict(initial_template_size + dilation_size, box_radius)
+    box_length = round(np.shape(dict)[0] ** (1/3))
+    new_map = np.zeros((np.shape(cell_probability)), dtype='uint8')
     newid = 1
-    Centroids = np.empty((0, 4))
+    centroids = np.empty((0, 4))
     
-    # run greedy search step for at most kmax steps (# cells <= kmax)
-    for ktot in range(kmax):
-        val = np.zeros((np.shape(Dict)[1], 1))
-        id = np.zeros((np.shape(Dict)[1], 1), dtype='uint32')
-        # loop to convolve the probability cube with each template in Dict
-        for j in range(np.shape(Dict)[1]):
-            convout = convn_fft(newtest, np.reshape(Dict[:,j], (Lbox, Lbox, Lbox)))
+    # run greedy search step for at most max_no_cells steps (# cells <= max_no_cells)
+    for ktot in range(max_no_cells):
+        val = np.zeros((np.shape(dict)[1], 1), dtype='float32')
+        id = np.zeros((np.shape(dict)[1], 1), dtype='uint32')
+        
+        # loop to convolve the probability cube with each template in dict
+        for j in range(np.shape(dict)[1]):
+            convout = signal.fftconvolve(newtest, np.reshape(dict[:,j], (box_length, box_length, 
+                                                                         box_length)), mode='same')
             # get the max value of the flattened convout array and its index
             val[j],id[j] = np.real(np.amax(convout)), np.argmax(convout)
         
         # find position in image with max correlation
         which_atom = np.argmax(val)
         which_loc = id[which_atom]
-        X2 = compute3dvec(Dict[:, which_atom], which_loc, Lbox,np.shape(newtest))
-        xid = np.nonzero(X2)
-        X3 = compute3dvec(Ddilate[:, which_atom], which_loc, Lbox, np.shape(newtest))
         
-        newtest = newtest * (X3 == 0)
-        ptest = val/np.sum(Dict, axis=0)
+        # Save dict into a cube array with its center given by which_loc and place it into a 3-D array.
+        x2 = compute3dvec(dict[:, which_atom], which_loc, box_length, np.shape(newtest))
+        xid = np.nonzero(x2)
         
-        if ptest < presid:
-            return(Centroids, Nmap)
+        # Save dilate_dict into a cube array with its center given by which_loc and place it into a 3-D array. 
+        x3 = compute3dvec(dilate_dict[:, which_atom], which_loc, box_length, np.shape(newtest))
         
-        Nmap[xid] = newid
+        newtest = newtest * (x3 == 0)
+        ptest = val/np.sum(dict, axis=0)
+        
+        if ptest < stopping_criterion:
+            return(centroids, new_map)
+        
+        # Label detected cell
+        new_map[xid] = newid
         newid = newid + 1
         
         #Convert flat index to indices 
         rr, cc, zz = np.unravel_index(which_loc, np.shape(newtest))
-        newC = cc, rr, zz  #Check - why cc is first in matlab? any connection to column-major/row-major?
+        new_centroid = cc, rr, zz  #Check - why cc is first?
         
-        # insert a row into Centroids
-        Centroids = np.vstack((Centroids, np.append(newC, ptest)))
+        # insert a row into centroids
+        centroids = np.vstack((centroids, np.append(new_centroid, ptest)))
         # for later: convert to logging and print with much less frequency 
-        print('Iter remaining = ', (kmax - ktot - 1), 'Correlation = ', ptest )
+        print('Iter remaining = ', (max_no_cells - ktot - 1), 'Correlation = ', ptest )
         
-    return(Centroids, Nmap)
+    return(centroids, new_map)

@@ -56,7 +56,7 @@ from __future__ import (absolute_import, division, print_function,
 import numpy as np
 from numpy import linalg as LA
 from scipy import ndimage as ndi
-from strel3d import strel3d
+from skimage.morphology import ball
 
 __author__ = "Eva Dyer"
 __credits__ = "Mehdi Tondravi"
@@ -79,19 +79,19 @@ def create_synth_dict(radii, box_radius):
     Returns
     -------
     ndarray
-        dictionary of template vectors, of size (Lbox ** 3 x length(radii)), where Lbox = box_radius*2 +1 and 
-        radii is an input to the function which contains a vector of different sphere sizes.
+        dictionary of template vectors, of size (box_length ** 3 x length(radii)), where 
+        box_length = box_radius*2 +1 and radii is an input to the function which contains a vector 
+        of different sphere sizes.
     """
     
-    Lbox = int(box_radius * 2 + 1)     #used for array dimension
-    Dict = np.zeros((Lbox**3, np.size(radii)), dtype='float32')
-    cvox = int((Lbox-1)/2 + 1)
+    box_length = int(box_radius * 2 + 1)     #used for array dimension
+    dict = np.zeros((box_length**3, np.size(radii)), dtype='float32')
+    cvox = int((box_length-1)/2 + 1)
     
     for i in range(len(radii)):
-        tmp = np.zeros((Lbox, Lbox, Lbox))
-        tmp[cvox, cvox, cvox] = 1
-        spheremat = strel3d(radii[i])
-        Dict[:, i] = np.reshape(ndi.binary_dilation(tmp, spheremat), (Lbox**3))
-        Dict[:, i] = Dict[:,i]/(LA.norm(Dict[:,i]))
+        template = np.zeros((box_length, box_length, box_length))
+        template[cvox, cvox, cvox] = 1
+        dict[:, i] = np.reshape(ndi.binary_dilation(template, ball((radii[i] - 1)/2)), (box_length**3))
+        dict[:, i] = dict[:, i]/(LA.norm(dict[:, i]))
         
-    return(Dict)
+    return(dict)

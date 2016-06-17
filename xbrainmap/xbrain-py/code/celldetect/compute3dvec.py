@@ -60,32 +60,25 @@ __credits__ = "Mehdi Tondravi"
 
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
-__all__ = ['roundno',
-           'placeatom',
+__all__ = ['placeatom',
            'compute3dvec']
 
 
-def roundno(no):
+def placeatom(vector, box_length, which_loc, stacksz):
     
     """
-    python rounds to the nearest even value. For exampl (12.5) returns 12. But in matlab
-    round(12.5) returns 13. This function is to have the same behavior as in matlab code. Inconsistency
-    is only if the number ends with ".5".
-    """
+    Copies the data from vector into a cube with the width of "box_length" and places the cube
+    into a 3-D array with the shape/size defined by the "stacksz" parameter. The center of cube is 
+    given by the "which_loc" parameter.
     
-    return int(no // 1 + ((no % 1) / 0.5) // 1)
-
-def placeatom(vec, Lbox, which_loc, stacksz):
-    
-    """
     Parameters
     ----------
-    vec : ndarray
+    vector : ndarray
         Nx1 array
-    Lbox : int
+    box_length : int
         Lenght
     which_loc : int
-        location to place atom
+        location to place atom in the flattened array
     stacksz : ndarry
         shape of the array (3D)
     
@@ -93,32 +86,41 @@ def placeatom(vec, Lbox, which_loc, stacksz):
     -------
     ndarray
     """
-    tmp = np.zeros((stacksz))
+    
+    output_array = np.zeros((stacksz), dtype='float32')
+    
     #Convert flat index to indices 
-    r,c,z = np.unravel_index(which_loc, (stacksz)) 
-    tmp[r, c, z] = 1
+    r, c, z = np.unravel_index(which_loc, (stacksz)) 
+    output_array[r, c, z] = 1
     
-    # Increase every dimension by Lbox before, Lbox after each dimension and fill them with zeros
-    tmp = np.lib.pad(tmp, ((Lbox, Lbox), (Lbox, Lbox), (Lbox, Lbox)), 'constant', constant_values=(0, 0))
-    # get the indices of the nonzero element 
-    center_loc = np.nonzero(tmp)
-    Lbox_half = roundno(Lbox / 2)
+    # Increase every dimension by box_length at the top and at the bottom and fill them with zeroes.
+    output_array = np.lib.pad(output_array, ((box_length, box_length), (box_length, box_length), 
+                           (box_length, box_length)), 'constant', constant_values=(0, 0))
     
-    tmp[center_loc[0] - Lbox_half + 1:center_loc[0] + Lbox_half, \
-            center_loc[1] - Lbox_half + 1:center_loc[1] + Lbox_half, \
-            center_loc[2] - Lbox_half + 1:center_loc[2] + Lbox_half] = \
-            np.reshape(vec, (Lbox, Lbox, Lbox))
-    return(tmp)
+    # get the indices of the center of cube into increased dimensions output_array.
+    r, c, z = np.nonzero(output_array)
+    
+    #save the output of round() function to avoid multiple calls to it.
+    half_length = round(box_length/2)
+    
+    #Save the data from the cube into output_array.
+    output_array[(r - half_length +1) : (r + box_length - half_length +1), \
+            (c - half_length +1) : (c + box_length - half_length +1), \
+            (z - half_length +1) : (z + box_length - half_length +1)] = \
+            np.reshape(vector, (box_length, box_length, box_length))
+    return(output_array)
 
 
-def compute3dvec(vec,which_loc,Lbox,stacksz):
+def compute3dvec(vector, which_loc, box_length, stacksz):
     
     """
+    Resizes the array dimension returned by placeatom() to the shape/size given by "stacksz" parameter.
+    
     Parameters
     ----------
-    vec : ndarray
+    vector : ndarray
         Nx1 array
-    Lbox : int
+    box_length : int
         Lenght
     which_loc : int
         location to place atom
@@ -130,13 +132,15 @@ def compute3dvec(vec,which_loc,Lbox,stacksz):
     ndarray
     """
     
-    tmp = placeatom(vec, Lbox, which_loc, stacksz)
+    output_array = placeatom(vector, box_length, which_loc, stacksz)
     
-    #delete the first Lbox R, C and Z 
-    x,y,z = np.shape(tmp)
-    tmp = tmp[Lbox:x, Lbox:y, Lbox:z]
+    #delete the top "box_length" arrays for all dimensions.
+    x, y, z = np.shape(output_array)
+    output_array = output_array[box_length:x, box_length:y, box_length:z]
 
-    #delete the last Lbox R, C and Z
-    x,y,z = np.shape(tmp)
-    tmp = tmp[0:(x-Lbox), 0:(y-Lbox), 0:(z-Lbox)]
-    return(tmp)
+    #delete the bottom "box_length" arrays for all dimensions.
+    x, y, z = np.shape(output_array)
+    output_array = output_array[0 : (x - box_length), 0 : (y - box_length), 0 : (z - box_length)]
+    
+    return output_array
+
