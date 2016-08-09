@@ -59,7 +59,7 @@ from create_synth_dict import create_synth_dict
 from compute3dvec import compute3dvec
 from scipy import signal
 import numpy as np
-
+import pdb
 import logging
 
 logger = logging.getLogger(__name__)
@@ -70,7 +70,6 @@ __credits__ = "Mehdi Tondravi"
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
 __all__ = ['detect_cells']
-
 
 def detect_cells(cell_probability, probability_threshold, stopping_criterion, 
                 initial_template_size, dilation_size, max_no_cells):
@@ -120,7 +119,7 @@ def detect_cells(cell_probability, probability_threshold, stopping_criterion,
     box_radius = np.ceil(np.max(initial_template_size)/2) + 1
     dict = create_synth_dict(initial_template_size, box_radius)
     dilate_dict = create_synth_dict(initial_template_size + dilation_size, box_radius)
-    box_length = round(np.shape(dict)[0] ** (1/3))
+    box_length = int(round(np.shape(dict)[0] ** (1/3)))
     new_map = np.zeros((np.shape(cell_probability)), dtype='uint8')
     newid = 1
     centroids = np.empty((0, 4))
@@ -152,6 +151,7 @@ def detect_cells(cell_probability, probability_threshold, stopping_criterion,
         ptest = val/np.sum(dict, axis=0)
         
         if ptest < stopping_criterion:
+            print("Cell Detection is done")
             return(centroids, new_map)
         
         # Label detected cell
@@ -160,11 +160,13 @@ def detect_cells(cell_probability, probability_threshold, stopping_criterion,
         
         #Convert flat index to indices 
         rr, cc, zz = np.unravel_index(which_loc, np.shape(newtest))
-        new_centroid = cc, rr, zz  #Check - why cc is first?
+        new_centroid = rr, cc, zz  #Check - why cc is first?
         
         # insert a row into centroids
         centroids = np.vstack((centroids, np.append(new_centroid, ptest)))
         # for later: convert to logging and print with much less frequency 
-        print('Iter remaining = ', (max_no_cells - ktot - 1), 'Correlation = ', ptest )
+        if(ktot % 50 == 0):
+            print('Iteration remaining = ', (max_no_cells - ktot - 1), 'Correlation = ', ptest )
         
+    print("Cell Detection is done")
     return(centroids, new_map)
