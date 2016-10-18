@@ -16,7 +16,7 @@ source deactivate
 source activate ilastik-dev
 
 Two: python Environment with parallel HDF enabled
-William Scullin helped me build PHDF Ð so do the following for PHDF Ð THIS IS FOR PYTHON 3.5 Ð NOT PYTHON 2.7
+William Scullin helped me build PHDF.  Do the following for PHDF - THIS IS FOR PYTHON 3.5 Ð NOT PYTHON 2.7
 It IS for MAC
 
 
