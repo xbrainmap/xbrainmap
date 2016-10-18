@@ -1,0 +1,37 @@
+Here is how to run this code:
+
+Sample Data:
+Need Ilastik trained data and tiff files to be classified. Saved my a copy of trained data for eva_block (this paper data) at:
+
+https://github.com/anlmehdi/xbrainmap/tree/master/xbrainmap/xbrain-py/test_data/train_data/my_s4_block_2.ilp
+
+and the actual data is at petrel.
+
+To run this code with the above sample data one should do:
+
+Step one Ð modify file segmentation_param.py Ð line 90 and 91 to point to directory for your input tiff files and Ilastik trained datat (*.ilp file).
+
+Step two Ð source activate ilastik-dev Ð python environment for Ilastik
+
+Step three Ð divide input tiff file into several parts for example:
+mpirun Ðn 8 python  tiff_to_hdf5_mpi.py
+
+Step Four Ð Run Ilastik to get probability maps on entire data
+mpirun Ðn 8 python ilastik_classify_mpi.py
+
+Step Five Ð deactivate Ilastik python environment
+
+Step Six Ð activate PHDF5 python environment
+
+Step seven Ð combine multiple probability maps from above into one file.
+
+mpirun Ðn 4 python combine_prob_maps_mpi.py
+
+Step eight Ð Detect cells
+mpirun Ðn 8 python cell_detect_big_data_mpi.py
+
+Step nine Ð Dectect vessels
+Mpirun Ðn 4 python vessel_detect_big_data_mpi.py
+
+ 
+
