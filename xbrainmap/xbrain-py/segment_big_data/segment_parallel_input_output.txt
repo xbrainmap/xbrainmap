@@ -1,0 +1,510 @@
+Step One - Activate Ilastik python Environment
+
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ source activate ilastik-devel2 
+
+Step Two - Divide tiff files into 8 stacks
+
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ mpirun -n 8 python tiff_to_hdf5_mpi.py
+*** Number of files not processed is 0 ***
+data shape is (35, 728, 1012)
+data shape is (35, 728, 1012)
+Done dividing tiff files, rank is 2, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+Done dividing tiff files, rank is 4, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+data shape is (35, 728, 1012)
+data shape is (35, 728, 1012)
+data shape is (35, 728, 1012)
+Done dividing tiff files, rank is 6, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+data shape is (35, 728, 1012)
+data shape is (35, 728, 1012)
+Done dividing tiff files, rank is 1, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+Done dividing tiff files, rank is 5, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+data shape is (35, 728, 1012)
+Done dividing tiff files, rank is 3, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+Done dividing tiff files, rank is 7, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+Done dividing tiff files, rank is 0, size is 8, name is Mehdis-MacBook-Pro.local, exec time is 1 sec
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+
+Step Three - run Ilastik to get cell & vessel probability maps
+
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ mpirun -n 8 python ilastik_classify_mpi.py
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+No handlers could be found for logger "ilastik.workflows"
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+hdf_files_location /Users/mehditondravi/Downloads/eva_block_mpi_hdf
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+Number of HDF5 files is 8, and Number of processes is 8
+Number of files not processed is 0
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO ilastik_main: Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+Starting ilastik from "/Applications/anaconda/envs/ilastik-devel2".
+INFO ilastik_main: Resetting lazyflow thread pool with 1 threads.
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+INFO ilastik_main: Configuring lazyflow RAM limit to 2.0GiB
+INFO lazyflow.utility.memory: Available memory set to 2.0GiB
+INFO ilastik.shell.projectManager: Opening Project: /Users/mehditondravi/xray_data/train_data/my_s4_block_2.ilp
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+WARNING dataset.py(76): DeprecationWarning: numpy boolean negative, the `-` operator, is deprecated, use the `~` operator or the logical_not function instead.
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+label_names, label_colors, probability_colors ['Label 1', 'Label 2', 'Label 3'] [(255, 0, 0), (0, 255, 0), (255, 255, 0)] [(255, 0, 0), (0, 255, 0), (255, 255, 0)]
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00930.tiff_3_data_00964.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01000.tiff_5_data_01034.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01035.tiff_6_data_01069.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00895.tiff_2_data_00929.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01070.tiff_7_data_01104.h5/exported_data
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00965.tiff_4_data_00999.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01105.tiff_8_data_01139.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO ilastik.applets.batchProcessing.batchProcessingApplet: Exporting to /Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00860.tiff_1_data_00894.h5/exported_data
+INFO lazyflow.operators.ioOperators.ioOperators.OpH5WriterBigDataset: Data shape: (35, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per pixel is 144.0B * safety factor (2.0)
+INFO lazyflow.utility.bigRequestStreamer: determining blockshape assuming available_ram is 1.5GiB, split between 1 threads
+INFO lazyflow.utility.bigRequestStreamer: Chose blockshape: (7, 728, 1012, 3)
+INFO lazyflow.utility.bigRequestStreamer: Estimated RAM usage per block is 1.4GiB
+INFO lazyflow.operators.classifierOperators: Features took 17.541252 seconds, Prediction took 32.33912 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.954397 seconds, Prediction took 32.151902 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.388891 seconds, Prediction took 32.75093 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.57132 seconds, Prediction took 32.766187 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.582137 seconds, Prediction took 32.836742 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.771196 seconds, Prediction took 32.898174 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.955647 seconds, Prediction took 32.750087 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.021444 seconds, Prediction took 33.287278 seconds for roi: [0, 0, 0, 0] : [7, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.219981 seconds, Prediction took 32.770375 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.609365 seconds, Prediction took 32.502758 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.460922 seconds, Prediction took 33.256622 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.501591 seconds, Prediction took 32.788534 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.382523 seconds, Prediction took 33.387242 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.668768 seconds, Prediction took 33.05925 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.410708 seconds, Prediction took 33.232105 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.477895 seconds, Prediction took 33.551646 seconds for roi: [7, 0, 0, 0] : [14, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.030309 seconds, Prediction took 32.581279 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.195412 seconds, Prediction took 32.495059 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.396942 seconds, Prediction took 32.575413 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.424448 seconds, Prediction took 32.986881 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.348515 seconds, Prediction took 32.927984 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.466312 seconds, Prediction took 33.012797 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.373076 seconds, Prediction took 33.207049 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.296704 seconds, Prediction took 33.232655 seconds for roi: [14, 0, 0, 0] : [21, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.683959 seconds, Prediction took 32.56956 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.043155 seconds, Prediction took 32.357362 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.479455 seconds, Prediction took 32.698824 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.333331 seconds, Prediction took 33.217901 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.257105 seconds, Prediction took 33.402628 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.432328 seconds, Prediction took 33.231486 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.494988 seconds, Prediction took 33.372586 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.98605 seconds, Prediction took 33.244608 seconds for roi: [21, 0, 0, 0] : [28, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.521909 seconds, Prediction took 32.670928 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.850901 seconds, Prediction took 32.400766 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.938871 seconds, Prediction took 32.653803 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01000.tiff_5_data_01034.h5/exported_data'] and my rank is 4
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01070.tiff_7_data_01104.h5/exported_data'] and my rank is 6
+probability_maps.shape (35, 728, 1012, 3)
+INFO lazyflow.operators.classifierOperators: Features took 17.970226 seconds, Prediction took 33.302266 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.920085 seconds, Prediction took 33.141474 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.985289 seconds, Prediction took 33.262674 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 18.04984 seconds, Prediction took 33.243103 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+INFO lazyflow.operators.classifierOperators: Features took 17.945438 seconds, Prediction took 33.245195 seconds for roi: [28, 0, 0, 0] : [35, 728, 1012, 3]
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01105.tiff_8_data_01139.h5/exported_data'] and my rank is 7
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00930.tiff_3_data_00964.h5/exported_data'] and my rank is 2
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00895.tiff_2_data_00929.h5/exported_data'] and my rank is 1
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00965.tiff_4_data_00999.h5/exported_data'] and my rank is 3
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_01035.tiff_6_data_01069.h5/exported_data'] and my rank is 5
+probability_maps.shape (35, 728, 1012, 3)
+DONE WITH CLASSIFICATION.
+hdf_dataset_path is ['/Users/mehditondravi/Downloads/eva_block_mpi_hdf/data_00860.tiff_1_data_00894.h5/exported_data'] and my rank is 0
+probability_maps.shape (35, 728, 1012, 3)
+cell_prob_map.shape and my rank is  (35, 728, 1012) 4
+cell_prob_map.shape and my rank is  (35, 728, 1012) 6
+cell_prob_map.shape and my rank is  (35, 728, 1012) 7
+cell_prob_map.shape and my rank is  (35, 728, 1012) 2
+cell_prob_map.shape and my rank is  (35, 728, 1012) 1
+cell_prob_map.shape and my rank is  (35, 728, 1012) 3
+cell_prob_map.shape and my rank is  (35, 728, 1012) 5
+cell_prob_map.shape and my rank is  (35, 728, 1012) 0
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 4
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 6
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 7
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 2
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 1
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 3
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 5
+vessel_prob_map.shape and my rank is  (35, 728, 1012) 0
+*** My Rank is 0, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 1, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 2, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 3, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 4, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 5, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 6, exec time is 289 sec - Done with classifying cells & vessels ***
+*** My Rank is 7, exec time is 289 sec - Done with classifying cells & vessels ***
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+
+Step Four - deactivate Ilastik python Env.
+
+(ilastik-devel2) Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ source deactivate
+
+Step Five - activate Parallel HDF python Env.
+
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$  mpirun -n 4 python combine_prob_maps_mpi.py
+Number of HDF5 files is 8, and Number of processes is 4
+Number of files not process is 0
+first and last idx are 0 35
+first and last idx are 35 70
+*** My Rank is 0 - Done with combining cells & vessels prob maps  ***
+My Rank, cells prob shape & vessel prob shape are 0 [ 280  728 1012] [ 280  728 1012]
+Number of HDF5 files is 8, and Number of processes is 4
+Number of files not process is 0
+first and last idx are 140 175
+first and last idx are 175 210
+*** My Rank is 2 - Done with combining cells & vessels prob maps  ***
+My Rank, cells prob shape & vessel prob shape are 2 [ 280  728 1012] [ 280  728 1012]
+Number of HDF5 files is 8, and Number of processes is 4
+Number of files not process is 0
+first and last idx are 70 105
+first and last idx are 105 140
+*** My Rank is 1 - Done with combining cells & vessels prob maps  ***
+My Rank, cells prob shape & vessel prob shape are 1 [ 280  728 1012] [ 280  728 1012]
+Number of HDF5 files is 8, and Number of processes is 4
+Number of files not process is 0
+first and last idx are 210 245
+first and last idx are 245 280
+*** My Rank is 3 - Done with combining cells & vessels prob maps  ***
+My Rank, cells prob shape & vessel prob shape are 3 [ 280  728 1012] [ 280  728 1012]
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+
+Step 6 - Detect cells
+
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$  mpirun -n 8 python cell_detect_big_data_mpi.py
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 2 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  0:140, 0:182, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.7021656]]
+Iteration remaining =  0 Correlation =  [[ 0.56140125]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  0:140, 364:546, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.81506765]]
+Iteration remaining =  0 Correlation =  [[ 0.81233674]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  140:280, 0:182, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.61751193]]
+Iteration remaining =  0 Correlation =  [[ 0.48172769]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  140:280, 364:546, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.82208598]]
+Iteration remaining =  0 Correlation =  [[ 0.75354302]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 5 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 5 x, y, z  0:140, 182:364, 253:506
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 5 x, y, z  0:140, 546:728, 253:506
+Iteration remaining =  1 Correlation =  [[ 0.5895223]]
+Iteration remaining =  0 Correlation =  [[ 0.54194266]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 5 x, y, z  140:280, 182:364, 253:506
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 5 x, y, z  140:280, 546:728, 253:506
+Iteration remaining =  1 Correlation =  [[ 0.64427149]]
+Iteration remaining =  0 Correlation =  [[ 0.6387381]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 1 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  0:140, 0:182, 253:506
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  0:140, 364:546, 253:506
+Iteration remaining =  1 Correlation =  [[ 0.62254375]]
+Iteration remaining =  0 Correlation =  [[ 0.54041404]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  140:280, 0:182, 253:506
+Iteration remaining =  1 Correlation =  [[ 0.49832803]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  140:280, 364:546, 253:506
+Iteration remaining =  1 Correlation =  [[ 0.60086381]]
+Iteration remaining =  0 Correlation =  [[ 0.53617436]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 0 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  0:140, 0:182, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.74298567]]
+Iteration remaining =  0 Correlation =  [[ 0.73282248]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  0:140, 364:546, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.8780852]]
+Iteration remaining =  0 Correlation =  [[ 0.78460187]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  140:280, 0:182, 0:253
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  140:280, 364:546, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.87201828]]
+Iteration remaining =  0 Correlation =  [[ 0.87138534]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 6 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 6 x, y, z  0:140, 182:364, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.65461385]]
+Iteration remaining =  0 Correlation =  [[ 0.57120222]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 6 x, y, z  0:140, 546:728, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.68509948]]
+Iteration remaining =  0 Correlation =  [[ 0.60962182]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 6 x, y, z  140:280, 182:364, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.71789414]]
+Iteration remaining =  0 Correlation =  [[ 0.70673966]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 6 x, y, z  140:280, 546:728, 506:759
+Iteration remaining =  1 Correlation =  [[ 0.7342158]]
+Iteration remaining =  0 Correlation =  [[ 0.69351912]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 7 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 7 x, y, z  0:140, 182:364, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.6794228]]
+Iteration remaining =  0 Correlation =  [[ 0.54324442]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 7 x, y, z  0:140, 546:728, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.56625795]]
+Iteration remaining =  0 Correlation =  [[ 0.51927948]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 7 x, y, z  140:280, 182:364, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.54097533]]
+Iteration remaining =  0 Correlation =  [[ 0.5100438]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 7 x, y, z  140:280, 546:728, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.53942275]]
+Iteration remaining =  0 Correlation =  [[ 0.52705812]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 3 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  0:140, 0:182, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.60030252]]
+Iteration remaining =  0 Correlation =  [[ 0.50951034]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  0:140, 364:546, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.67529857]]
+Iteration remaining =  0 Correlation =  [[ 0.65839964]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  140:280, 0:182, 759:1012
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  140:280, 364:546, 759:1012
+Iteration remaining =  1 Correlation =  [[ 0.69190288]]
+Iteration remaining =  0 Correlation =  [[ 0.65584391]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+/Users/mehditondravi/playground/mat_to_python/mpi_sub101816/compute3dvec.py:110: VisibleDeprecationWarning: converting an array with ndim > 0 to an index will result in an error in the future
+  np.reshape(vector, (box_length, box_length, box_length))
+cell_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 4 of 8 running on Mehdis-MacBook-Pro.local
+Volume Centroids size is 64
+***Cell Sub-volume*** to be processed by rank 4 x, y, z  0:140, 182:364, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.47536224]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 4 x, y, z  0:140, 546:728, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.81564486]]
+Iteration remaining =  0 Correlation =  [[ 0.8126871]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 4 x, y, z  140:280, 182:364, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.52514333]]
+Iteration remaining =  0 Correlation =  [[ 0.5203861]]
+Cell Detection is done
+***Cell Sub-volume*** to be processed by rank 4 x, y, z  140:280, 546:728, 0:253
+Iteration remaining =  1 Correlation =  [[ 0.4932484]]
+Iteration remaining =  0 Correlation =  [[ 0.48782241]]
+Cell Detection is done
+Done with Cell Detection and Number of sub-volumes ignored is 0
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+
+Step seven - Detect Vessels
+
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$  mpirun -n 4 python vessel_detect_big_data_mpi.py
+/Applications/anaconda/lib/python3.5/site-packages/skimage/morphology/misc.py:122: UserWarning: Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?
+  warn("Only one label was provided to `remove_small_objects`. "
+vessel_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 0 of 4 running on Mehdis-MacBook-Pro.local
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  0:280, 0:364, 0:253
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+***Cell Sub-volume*** to be processed by rank 0 x, y, z  0:280, 364:728, 0:253
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+Number of sub-volumes ignored is 0
+/Applications/anaconda/lib/python3.5/site-packages/skimage/morphology/misc.py:122: UserWarning: Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?
+  warn("Only one label was provided to `remove_small_objects`. "
+vessel_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 1 of 4 running on Mehdis-MacBook-Pro.local
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  0:280, 0:364, 253:506
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+***Cell Sub-volume*** to be processed by rank 1 x, y, z  0:280, 364:728, 253:506
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+Number of sub-volumes ignored is 0
+/Applications/anaconda/lib/python3.5/site-packages/skimage/morphology/misc.py:122: UserWarning: Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?
+  warn("Only one label was provided to `remove_small_objects`. "
+vessel_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 2 of 4 running on Mehdis-MacBook-Pro.local
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  0:280, 0:364, 506:759
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+***Cell Sub-volume*** to be processed by rank 2 x, y, z  0:280, 364:728, 506:759
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+Number of sub-volumes ignored is 0
+/Applications/anaconda/lib/python3.5/site-packages/skimage/morphology/misc.py:122: UserWarning: Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?
+  warn("Only one label was provided to `remove_small_objects`. "
+vessel_prob_dataset.shape (280, 728, 1012)
+Done with computing sub-volumes - This is rank 3 of 4 running on Mehdis-MacBook-Pro.local
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  0:280, 0:364, 759:1012
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+***Cell Sub-volume*** to be processed by rank 3 x, y, z  0:280, 364:728, 759:1012
+In segment_vessel function **** unfiltered_im.shape, dtype (280, 364, 253) bool
+Number of sub-volumes ignored is 0
+Mehdis-MacBook-Pro:mpi_sub101816 mehditondravi$ 
+
+
+
+
