@@ -1,1 +1,28 @@
-What is needed to execute this code:Need two different python environments to run this code:
+What is needed to execute this code:
+
+Need two different python environments to run this code:
+
+One: python Environment to run Ilastik code and below is how to do it (Ilastik is for PY 2)
+
+
+conda create -n ilastik-dev  python=2.7
+source activate ilastik-dev
+conda install -c ilastik ilastik-everything-but-tracking
+pip install mahotas
+pip install ndparse
+conda install ipython
+conda install jupyter
+source deactivate
+source activate ilastik-dev
+
+Two: python Environment with parallel HDF enabled
+William Scullin helped me build PHDF Ð so do the following for PHDF Ð THIS IS FOR PYTHON 3.5 Ð NOT PYTHON 2.7
+It IS for MAC
+
+
+conda install -c mehditon hdf5
+conda install -c mehditon h5py
+conda install -c mehditon mpi4py
+
+
+
