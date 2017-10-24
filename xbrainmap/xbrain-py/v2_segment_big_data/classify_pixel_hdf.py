@@ -43,6 +43,9 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Interface module to Ilastik pixel classifier to create probbility maps for a given dataset and training data.
+'''
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -64,7 +67,7 @@ from ilastik.workflows.pixelClassification import PixelClassificationWorkflow
 def classify_pixel_hdf(hdf_data_set_name, classifier, threads, ram):
     
     """
-    Interface funtion to Ilastik object classifier functions.
+    Interface function to Ilastik object classifier functions.function
     
     Runs a pre-trained ilastik classifier on a volume of data given in an hdf5 file
     Adapted from Stuart Berg's example here:
@@ -113,7 +116,6 @@ def classify_pixel_hdf(hdf_data_set_name, classifier, threads, ram):
     # Construct an OrderedDict of role-names -> DatasetInfos
     # (See PixelClassificationWorkflow.ROLE_NAMES)
     data_info = DatasetInfo(hdf_data_set_name)
-#    data_info.axistags = vigra.defaultAxistags('tyx'.encode('ascii'))
     # Classifying a volume specified of dimensions of: slices, column and rows
     data_info.axistags = vigra.defaultAxistags('zyx'.encode('ascii')) 
     role_data_dict = OrderedDict([("Raw Data", [data_info])])

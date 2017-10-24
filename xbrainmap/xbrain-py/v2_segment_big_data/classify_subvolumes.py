@@ -45,6 +45,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Assigns each pixel in the image to the class determined by Ilastik Classifier.
+'''
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -88,7 +92,7 @@ def classify_subvolumes():
         print("*** Time is %d Entered classify_subvolumes() ****" % time.time())
         print("Ilastik classes are ", ilastik_classes)
     
-    # Get list of pixel classsified sub-volume files with probability maps . Assumes file extension is .h5
+    # Get list of pixel classified sub-volume files with probability maps . Assumes file extension is .h5
     input_files = sorted(glob(hdf_subvol_files_location + '/*Probabilities.h5'))
     if not input_files:
         print("*** Did not find any file ending with .h5 extension  ***", hdf_subvol_files_location)

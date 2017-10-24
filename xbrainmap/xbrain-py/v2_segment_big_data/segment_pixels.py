@@ -45,6 +45,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Segments pixels in a composite input image dataset into multiple image datasets.
+'''
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -64,7 +68,7 @@ __all__ = ['segment_pixels']
 
 def segment_pixels():
     """ 
-    Separates pixels in the input sub-volume image files and creates an hdf5 for each input file.
+    Separates pixels in the input sub-volume image files and creates an hdf5 file for each input file.
     Pixel mask for each class defined in the trained data is given in a dataset of a hdf5 file
     for each sub-volume. Also, composite sub-volume image for each sub-volume is given in another hdf5
     file. This script creates segmented image for each sub-volume by element by element multiplication 
@@ -76,7 +80,7 @@ def segment_pixels():
     Composite sub-volumes image hdf5 files.
     Pixel mask for each class/label in a hdf5 file per sub-volume.
     
-    Ouputs:
+    Outputs:
     a hdf5 file per sub-volume with a dataset for each defined segmented class.
     """
     
@@ -138,12 +142,12 @@ def segment_pixels():
         print("file datasets are", im_datasets)
         orig_idx_data = orig_idx_ds[...]
         
-        # Retrive overlap size to the right side of the sub-volume.
+        # Retrieve overlap size to the right side of the sub-volume.
         rightoverlap_ds = im_file[im_datasets.pop(im_datasets.index('right_overlap'))]
         print("file datasets are", im_datasets)
         rightoverlap_data = rightoverlap_ds[...]
         
-        # Retrive overlap size to the left side of the sub-volume.
+        # Retrieve overlap size to the left side of the sub-volume.
         leftoverlap_ds = im_file[im_datasets.pop(im_datasets.index('left_overlap'))]
         print("file datasets are", im_datasets)
         leftoverlap_data = leftoverlap_ds[...]

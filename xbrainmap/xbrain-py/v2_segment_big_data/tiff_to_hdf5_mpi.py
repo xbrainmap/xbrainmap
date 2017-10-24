@@ -45,6 +45,9 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Converts reconstructed tiff image files into its corresponding numpy array.
+'''
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -120,11 +123,8 @@ def tiff_to_hdf5_files():
     if rank == 0:
         print("*** Dataset name is ***", data_set_name)
     
-    data_set = hdf_file.create_dataset(data_set_name, (len(files), data_shape[0], data_shape[1]), data_type,
-                                       chunks=(1, data_shape[0], data_shape[1]))
-    '''
     data_set = hdf_file.create_dataset(data_set_name, (len(files), data_shape[0], data_shape[1]), data_type)
-    '''
+    
     iterations = int(len(files) / size) + (len(files) % size > 0)
     for idx in range(iterations):
         if (rank + (size * idx)) >= len(files):

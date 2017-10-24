@@ -45,6 +45,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Classify subvolumes by Ilastik pixel classifier.
+'''
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -65,7 +69,7 @@ __all__ = ['ilastik_classify_mpi']
 
 def ilastik_classify_mpi():
     """
-    Divides many *.hdf5 sub-volume image files which are crteated from tiff files and calls Ilastik pixel
+    Divides many *.hdf5 sub-volume image files which are created from tiff files and calls Ilastik pixel
     classifier on each of *.hdf5 file.
     
     Inputs: 

@@ -45,6 +45,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+Divides a volume array into subvolumes/subarrays.
+'''
+
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -175,7 +179,7 @@ def make_subvolume_mpi():
         print("rank is %d, idx is %d, size is %d, file name is %s" % (rank, idx, size, subvol_filename))
         subvolfile = h5py.File(subvol_filename, 'w')
         
-        # Determine pixcels overlap to the right side of the sub-volume.
+        # Determine pixels overlap to the right side of the sub-volume.
         if (x_idx[0][1] + pixeloverlap) < vol_shape[0]:
             x_rightoverlap = pixeloverlap
         else:
@@ -191,7 +195,7 @@ def make_subvolume_mpi():
         else:
             z_rightoverlap = 0
         
-        # Determine pixcels overlap to the left side of the sub-volume.
+        # Determine pixels overlap to the left side of the sub-volume.
         if (x_idx[0][0] > pixeloverlap):
             x_leftoverlap = pixeloverlap
         else:

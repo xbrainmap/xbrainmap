@@ -45,6 +45,9 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
+'''
+This module combines subvolume arrays into one whole volume array.
+'''
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -77,13 +80,14 @@ def combine_segmented_subvols():
     rank = comm.Get_rank()
     size = MPI.COMM_WORLD.Get_size()
     name = MPI.Get_processor_name()
-    print("Entered the function and size is %d" % size)
+    if rank == 0:
+        print("Entered the function and size is %d" % size)
     # Get the list of all segmented image files . Assumes file extension is .h5
     input_files = sorted(glob(outimage_file_location + '/*subvol*.h5'))
     if not input_files:
         print("*** Did not find any file ending with .hdf5 extension  ***", hdf_subvol_files_location)
         return
-    # Shape/Dimention of the volume image is available in the last sub-volume file.
+    # Shape/Dimension of the volume image is available in the last sub-volume file.
     volume_ds_shape = np.zeros((3,), dtype='uint64')
     
     # Last file has the dimensions for the volume.
@@ -94,20 +98,16 @@ def combine_segmented_subvols():
     volume_ds_shape[2] = volshape[5]
     # Get the list of segmented datasets 
     seg_ds_list = f.keys()
-    print("segmentation DS list is seg_ds_list", seg_ds_list)
+    if rank == 0:
+        print("segmentation DS list is seg_ds_list", seg_ds_list)
     seg_ds_list.remove('orig_indices')
-    print("segmentation DS list is seg_ds_list", seg_ds_list)
     seg_ds_list.remove('right_overlap')
-    print("segmentation DS list is seg_ds_list", seg_ds_list)
     seg_ds_list.remove('left_overlap')
-    print("segmentation DS list is seg_ds_list", seg_ds_list)
     f.close()
     
-    time2 = time.time()
     # Create an hdf file to contain the whole volume segmented images for all classes
     par, name = os.path.split(outimage_file_location)
     seg_volume_file = (outimage_file_location + '/volume_' + name + '.h5')
-    time3 = time.time()
     if rank == 0:
         print("seg_ds_list is ", seg_ds_list)
         print("Number of HDF5 files is %d, and Number of processes is %d" % ((len(input_files)), size))
@@ -122,23 +122,21 @@ def combine_segmented_subvols():
             print("File directory for whole segmented volume did not exist, was created")
     
     comm.Barrier()
-    
-    time4 = time.time()
-    
+    create_time = time.time()
     vol_map_file = h5py.File(seg_volume_file, 'w', driver='mpio', comm=comm)
     if rank == 0:
-        print("Created Segmented volume file %s" % seg_volume_file)
+        print("Created Segmented volume file %s and time to create it is %d Sec" % (seg_volume_file, time.time() - create_time))
     
     iterations = int(len(input_files) / size) + (len(input_files) % size > 0)
-    print("iterations is ", iterations)
+    if rank == 0:
+        print("iterations is ", iterations)
     # Combine all datasets in the subvolume into the whole volume file.
     for ds in range(len(seg_ds_list)):
         ds_time = time.time()
-        vol_seg_dataset = vol_map_file.create_dataset(seg_ds_list[ds], volume_ds_shape, dtype='uint8',
-                                                      chunks=(1, il_sub_vol_y, il_sub_vol_z))
-        print("Working on subvolume segmented class %s" % seg_ds_list[ds])
+        vol_seg_dataset = vol_map_file.create_dataset(seg_ds_list[ds], volume_ds_shape, dtype='uint8')
         if rank == 0:
-            print("Chunked Dataset creation time is %d Sec" % (time.time() - ds_time))
+            print("Dataset creation time is %d Sec" % (time.time() - ds_time))
+            print("Working on subvolume segmented class %s" % seg_ds_list[ds])
         for idx in range(iterations):
             if (rank + (size * idx)) >= len(input_files):
                 print("\nBREAKING out, my rank is %d, number of files is %d, size is %d and idx is %d" %
@@ -162,16 +160,18 @@ def combine_segmented_subvols():
             y_dim = subvoldata.shape[1]
             z_dim = subvoldata.shape[2]
             print("subvol dimension, rightoverlap and leftoverlap are", subvoldata.shape, rightoverlap, leftoverlap)
-            print("subvolume dataset Read time is %d Sec, rank is %d" % ((time.time() - start_subvol_ds), rank))
+            print("\n subvolume dataset Read time is %d Sec, rank is %d file is %s" % 
+                  ((time.time() - start_subvol_ds), rank, input_files[rank + (size * idx)]))
+            ds_write = time.time()
             vol_seg_dataset[orig_idx[0]:orig_idx[1], orig_idx[2]:orig_idx[3], orig_idx[4]:orig_idx[5]] = \
                 subvoldata[leftoverlap[0] : x_dim - rightoverlap[0], 
                            leftoverlap[1] : y_dim - rightoverlap[1], 
                            leftoverlap[2] : z_dim - rightoverlap[2]]
-            print("Time to read and save subvolume ds is  %d Sec and rank is %d" % ((time.time() - start_subvol_ds), rank))
+            print("Time to write a subvolume ds is  %d Sec and rank is %d" % ((time.time() - ds_write), rank))
             subvol_file.close()
         
         comm.Barrier()
-        print("Time to combine one dataset to whole volume is %d Sec" % (time.time() - ds_time))
+        print("Time to combine one dataset to whole volume is %d Sec and dataset is %s" % ((time.time() - ds_time), seg_ds_list[ds])) 
     
     vol_map_file.close()
     end_time = time.time()
