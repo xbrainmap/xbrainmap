@@ -26,3 +26,27 @@ This step should be run on a set of networked servers to speed up the processing
 In this step, the K subarrays in sub-volume files are combined to create K arrays for the volume. 
 This step should be run on a set of networked servers to speed up the processing.
 
+
+Configuring python environments to run this workflow
+----------------------------------------------------
+
+To read and write into a common HDF5 file need hdf5 package compiled in “parallel” mode. Ilastik is not built with this option and will be too much effort to build it for parallel HDF5. So, should create the following two python environments and take advantage of the pre-built required Ilastik packages.
+
+**\1. Python Environment for making and combining sub-volumes**
+
+This environment should be used when creating sub-volumes for segmentation, and when combining segmented sub-volumes into a whole volume file. Python modules installed into this environment in addition to parallel HDF5 should include h5py, skimage, mpi4py, glob, multiprocessing and psutil.
+
+**\2. Python Environment for Automated Segmentation with Ilastik**
+
+This environment is needed to segment the sub-volume files. Below is a suggestion on how to make this environment assuming the new python environment name is "lastik-devel" :
+
+conda create -n ilastik-devel -c ilastik ilastik-everything-no-solvers
+
+conda install -n ilastik-devel  -c conda-forge ipython
+
+conda install -n ilastik-devel -c conda-forge  mpi4py
+
+source activate ilastik-devel
+
+**Note**: It is possible to run all steps of this workflow with the Ilastik/above python environment. In this case, then “making and combining sub-volumes” which takes a fraction of total processing time must be run in a single python process/thread (e.g., mpirun –np1 python “python script”). However, the “automated segmentation with Ilastik” which takes majority of the processing time should be run by multiple python processes. 
+

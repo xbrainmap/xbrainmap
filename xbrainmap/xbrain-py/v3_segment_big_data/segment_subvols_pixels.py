@@ -92,7 +92,13 @@ def segment_subvols_pixels():
     threads = int(no_of_threads/1)
     # Allow Ilastik to use all available memory of the server/compute node.
     ram = int(ram_size)
-    
+    # if not enough memory stop processing. Required memory is subvolume size times 4 bytes times
+    # number of labeled classed plus two.
+    mem_required = il_sub_vol_x * il_sub_vol_y * il_sub_vol_z * (len(get_ilastik_labels()) + 2) * 4
+    if int(mem_required / 1e6) > ram:
+        print("AVAILABLE MEMORY IS NOT BIG ENOUGH TO PROCEED. MAKE SUBVOLUME SMALLER AND TRY AGAIN")
+        print("Avaiable memory is %d MB and required memory is %d MB" % (ram, int(mem_required/ 1e6)))
+        return
     if rank == 0:
         print("*** size is %d, No of thread is %d, ram size is %d" % (size, threads, ram))
     # assumes sub-volume image file extension is .hdf5
