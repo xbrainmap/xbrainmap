@@ -17,5 +17,9 @@ Directory has Scripts for Initial version to segment big datasets - To be delete
 
 code
 -------
-Directory has Scripts for Version to segment small datasets - single thread of execution
+Directory has Scripts for analyzing and quantifying neuroanatomy in X-ray microtomography images as described in **Dyer, Eva L., et al. "Quantifying mesoscale neuroanatomy using X-ray microtomography." arXiv preprint,**  arXiv:1604.03629_ (2016).
+
+.. _arXiv:1604.03629: https://arxiv.org/abs/1604.03629/
+
+
 
