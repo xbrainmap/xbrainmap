@@ -92,9 +92,9 @@ The above will create NNN sub-volume files in a newly created directory called �
 
 *\2. source activate Ilastik-devel*
 
-# Segment sub-volume files created in previous step assuming 12 python processes.
+# Segment sub-volume files created in previous step assuming 12 python processes on 12 servers.
 
-*\3. mpirun –np 12 python segment_subvols_pixels.py*
+*\3. mpirun -f $HOSTLIST –np 12 python segment_subvols_pixels.py*
 
 The above command creates NNN sub-volume files (036 files in this example) in a newly created directory called “/home/projects/sample1_tiff_pixels_maps”. Each file has K datasets (K is the number of object types/labeled classes in Ilastik trained file), each dataset is for the segmented image for a labeled class for that sub-volume.
 
@@ -133,14 +133,11 @@ Below is the sequence of commands to enter if "paralle HDF5" is not available. T
 
 *\3. mpirun –np 1 python make_subvolume_mpi.py*
 
-# Segment sub-volume files created in previous step assuming 12 python processes.
+# Segment sub-volume files created in previous step assuming 12 python processes on 12 servers.
 
-*\4. mpirun –np 12 python segment_subvols_pixels.py*
+*\4. mpirun -f $HOSTLIST –np 12 python segment_subvols_pixels.py*
 
 # combine sub-volumes into volume - **must use one python processe.**
 
 *\5. mpirun –np 4 python combine_segmented_subvols.py*
-
-
-
 
