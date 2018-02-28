@@ -97,7 +97,6 @@ def create_subvol_mask(prob_maps):
         if row != 0 and row % print_cycle == 0:
             print("time to classify %d rows is %d Sec" % (print_cycle, (time.time() - start_loop_time)))
             start_loop_time = time.time()
-    output_array = np.transpose(output_array, (3, 0, 1, 2))
     print("prob map output array shape is", output_array.shape)
     return output_array
 

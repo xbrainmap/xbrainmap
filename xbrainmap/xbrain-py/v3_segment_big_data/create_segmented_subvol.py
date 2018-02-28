@@ -102,7 +102,7 @@ def create_segmented_subvol(subvol_im, pixel_masks, filename, orig_idx_data, rig
     for label in range(len(ilastik_classes)):
         seg_im_ds = seg_im_file.create_dataset(ilastik_classes[label], subvol_im.shape, subvol_im.dtype)
         multiply_time = time.time()
-        seg_im_ds[...] = subvol_im * pixel_masks[label,...]
+        seg_im_ds[...] = subvol_im * pixel_masks[..., label]
         print("Multiply time for one dataset is %d Sec" % (time.time() - multiply_time))
         
     seg_im_file.close()
