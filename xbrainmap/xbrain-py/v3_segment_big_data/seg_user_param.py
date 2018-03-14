@@ -82,4 +82,4 @@ tiff_files_location = '/projects/mousebrain/recon_rot34_crop_cc'
 # Specify full path to the Ilastik trained data file.
 classifier = '/projects/classifiers/v1_4xmouse_train_data.ilp'
 
-save_cell_prob_map = 'YES'
+save_cell_prob_map = 'NO'
