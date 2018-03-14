@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 
 # #########################################################################
 # Copyright (c) 2015, UChicago Argonne, LLC. All rights reserved.         #
@@ -46,7 +46,7 @@
 # #########################################################################
 
 '''
-This module combines subvolume arrays into one whole volume array.
+This module combines cell probability maps subarrays into one whole volume array.
 '''
 
 from __future__ import (absolute_import, division, print_function,
@@ -64,13 +64,11 @@ from segmentation_param import *
 __author__ = "Mehdi Tondravi"
 __copyright__ = "Copyright (c) 2016, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
-__all__ = ['combine_segmented_subvols']
+__all__ = ['combine_subvols_prob_map']
 
 
-def combine_segmented_subvols():
+def combine_subvols_prob_map():
     """
-    Combines many segmented images created for sub-volumes into one big hdf5 for the whole volume with a 
-    dataset for each segmented image class/label.
     
     Input: The segmented sub-volume image files -  files location is specified in the seg_user_param.py file.
     
@@ -83,8 +81,8 @@ def combine_segmented_subvols():
     server_name = MPI.Get_processor_name()
     if rank == 0:
         print("Entered the function and size is %d" % size)
-    # Get the list of all segmented image files . Assumes file extension is .h5
-    input_files = sorted(glob(outimage_file_location + '/*subvol*.h5'))
+    # Get the list of all subarray probability map files . Assumes file extension is .h5
+    input_files = sorted(glob(hdf_subvol_files_location + '/*subarr*.h5'))
     if not input_files:
         print("*** Did not find any file ending with .h5 extension  ***", hdf_subvol_files_location)
         return
@@ -104,34 +102,29 @@ def combine_segmented_subvols():
     seg_ds_list.remove('orig_indices')
     seg_ds_list.remove('right_overlap')
     seg_ds_list.remove('left_overlap')
+    datatype = f[seg_ds_list[0]].dtype
     f.close()
     
     # Create an hdf file to contain the whole volume segmented images for all classes.
-    par, name = os.path.split(outimage_file_location)
-    seg_volume_file = (outimage_file_location + '/volume_' + name + '.h5')
+    par, name = os.path.split(tiff_files_location)
+    prob_volume_file = (hdf_subvol_files_location + '/volume_prob_map_' + name + '.h5')
     if rank == 0:
         print("seg_ds_list is ", seg_ds_list)
         print("Number of HDF5 files is %d, and Number of processes is %d" % ((len(input_files)), size))
-        print("Segmented Volume file is %s" % seg_volume_file)
-        print("Segmented Volume directory is %s" % outimage_file_location)
+        print("Segmented Volume file is %s" % prob_volume_file)
+        print("Segmented Volume directory is %s" % hdf_subvol_files_location)
         print("Volume Shape is", volume_ds_shape[...])
-    
-    # Create directory for the whole volume probability maps if it does not exist.
-    if rank == 0:
-        if not os.path.exists(outimage_file_location):
-            os.mkdir(outimage_file_location)
-            print("File directory for whole segmented volume did not exist, was created")
-    
+        
     comm.Barrier()
     create_time = time.time()
     # Need Parallel HDF for faster processing. However the below test lets processing to continue even if
     # Parallel HDF is not available.
     if size == 1:
-        vol_map_file = h5py.File(seg_volume_file, 'w')
+        vol_map_file = h5py.File(prob_volume_file, 'w')
     else:
-        vol_map_file = h5py.File(seg_volume_file, 'w', driver='mpio', comm=comm)
+        vol_map_file = h5py.File(prob_volume_file, 'w', driver='mpio', comm=comm)
     if rank == 0:
-        print("Created Segmented volume file %s and time to create it is %d Sec" % (seg_volume_file, time.time() - create_time))
+        print("Created Segmented volume file %s and time to create it is %d Sec" % (prob_volume_file, time.time() - create_time))
     iterations = int(len(input_files) / size) + (len(input_files) % size > 0)
     if rank == 0:
         print("iterations is ", iterations)
@@ -139,7 +132,7 @@ def combine_segmented_subvols():
     for ds in range(len(seg_ds_list)):
         print("Working on subvolume segmented class %s" % seg_ds_list[ds])
         ds_time = time.time()
-        vol_seg_dataset = vol_map_file.create_dataset(seg_ds_list[ds], volume_ds_shape, dtype='uint8',
+        vol_seg_dataset = vol_map_file.create_dataset(seg_ds_list[ds], volume_ds_shape, dtype=datatype,
                                                       chunks=(1, il_sub_vol_y, il_sub_vol_z))
         if rank == 0:
             print("Dataset creation time is %d Sec" % (time.time() - ds_time))
@@ -191,4 +184,4 @@ def combine_segmented_subvols():
         print("Exec time for combine_segmented_subvols() is %d Sec and rank is %d" % ((time.time() - start_time), rank))
 
 if __name__ == '__main__':
-    combine_segmented_subvols()
+    combine_subvols_prob_map()

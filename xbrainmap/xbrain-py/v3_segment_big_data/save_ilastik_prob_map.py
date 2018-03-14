@@ -45,87 +45,62 @@
 # POSSIBILITY OF SUCH DAMAGE.                                             #
 # #########################################################################
 
-"""
-This file has various parameters values needed for segmentation of big data.
-"""
+'''
+This module saves probability map dataset created by Ilastik in a file.
+'''
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import multiprocessing
-from psutil import virtual_memory
-from seg_user_param import *
+import pdb
+import numpy as np
+import h5py
+import os.path
+from glob import glob
+import time
+from segmentation_param import *
 
 __author__ = "Mehdi Tondravi"
 __copyright__ = "Copyright (c) 2017, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
+__all__ = ['save_ilastik_prob_map']
 
-'''
-The below parameters should not be changed.
-'''
-
-# Number of pixel to use for overlapping in sub-voluming images.
-pixeloverlap = 20
-
-# Volume raw input data
-hdf_files_location = tiff_files_location + '_mpi_hdf'
-
-# Ilastik sub-volume input/oputput hdf5 files
-hdf_subvol_files_location = tiff_files_location + '_ilastik_inout'
-
-# Segmented pixel Sub-volume directory - contains an hdf5 file for each sub-volume.
-outimage_file_location = tiff_files_location + '_pixels_maps'
-
-# Segmented pixel volume directory - contains one hdf5 file with a datasets for each segmented class.
-volume_map_file_location = tiff_files_location + '_volume_prob_maps'
-
-# Dataset name for Ilastik probability map for classified classes.
-ilastik_ds_name = 'exported_data'
-
-no_of_threads = multiprocessing.cpu_count()
-ram_size = int(virtual_memory().total/(1024**3)) * 1000
-
-ilp_file_name = classifier
-import h5py
-import pdb
-
-def get_ilastik_labels():
-    '''
-    This function finds and returns the object class names defined during the 
-    Ilastik training session.
-    '''
+def save_ilastik_prob_map(prob_maps, label_index, dsname, orig_idx_data, rightoverlap_data, leftoverlap_data):
+    """ 
     
-    ilpfile = h5py.File(ilp_file_name, 'r')
-    label_ds = ilpfile['PixelClassification/LabelNames']
-    labels = label_ds[...].tolist()
+    Inputs: 
+    prob_maps -  Composite sub-volumes image array
+    label_index - index of the labeled class in the Ilastik trained file.
+    dsname - dataset name of the class to save its probability map
+    orig_idx_data - whole volume array indices
+    rightoverlap_data - number of overlapped pixels from the right side of the sub-volume.
+    leftoverlap_data  - number of overlapped pixels from the left side of the sub-volume. 
     
-    for idx in range(len(labels)):
-        labels[idx] = labels[idx].decode()
+    Ouputs:
+    a hdf5 file per sub-volume with a dataset for each defined segmented class.
+    """
     
-    print(labels)
-    return labels
-
-
-def save_prob_map():
-    '''
-    This function returns whether to save Ilastik cell probability map to file or not.
-    '''
-    index = 0
-    save_to_file = False
-    if save_cell_prob_map.upper() == 'YES':
-        labels = get_ilastik_labels()
-        for item in labels:
-            if 'CELL' in item.upper():
-                save_to_file = True
-                index = labels.index(item)
-                break
-            
-    return (save_to_file, index)
-
-
-
-
-
-
-
+    start_time = time.time()
+    ilastik_classes = get_ilastik_labels()
+    prob_map_file = hdf_subvol_files_location + '/subarr_prob_map_' + dsname + '.h5'
+    probfile = h5py.File(prob_map_file, 'w')
+    # Save sub-volume indices 
+    subvol_indx = probfile.create_dataset('orig_indices', (6,), dtype='uint64')
+    subvol_indx[...] = orig_idx_data
+    # Save sub-volume right and left side overlaps.
+    subvol_rightoverlap = probfile.create_dataset('right_overlap', (3,), dtype='uint8')
+    subvol_rightoverlap[...] = rightoverlap_data
+    subvol_leftoverlap = probfile.create_dataset('left_overlap', (3,), dtype='uint8')
+    subvol_leftoverlap[...] = leftoverlap_data
+    
+    dataset = ilastik_classes[label_index]
+    map_to_save = prob_maps[..., label_index]
+    mapds = probfile.create_dataset(dataset, map_to_save.shape, map_to_save.dtype)
+    write_time = time.time()
+    mapds[...] = map_to_save
+    print("dataset write time for one dataset is %d Sec" % (time.time() - write_time))
+    probfile.close()
+    end_time = time.time()
+    print("Exec time for create_segmented_subvol is %d Sec" % ((end_time - start_time)))
+    return
 

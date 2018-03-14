@@ -62,12 +62,13 @@ from segmentation_param import *
 from classify_pixel import classify_pixel
 from create_subvol_mask import create_subvol_mask
 from create_segmented_subvol import create_segmented_subvol
+from save_ilastik_prob_map import save_ilastik_prob_map
 import pdb
 
 __author__ = "Mehdi Tondravi"
 __copyright__ = "Copyright (c) 2017, UChicago Argonne, LLC."
 __docformat__ = 'restructuredtext en'
-__all__ = ['ilastik_classify_mpi']
+__all__ = ['segment_subvols_pixels']
 
 def segment_subvols_pixels():
     """
@@ -80,7 +81,8 @@ def segment_subvols_pixels():
     Ilastik trained data - file location is specified in seg_user_param.py file.
         
     Output: 
-    The segmented sub-volumes files in location as specified in seg_user_param.py file.  
+    The segmented sub-volumes files in location as specified in seg_user_param.py file.
+    Saves cell probability map if the user has requested it by setting "save_cell_prob_map" to "yes".
     
     """
     comm = MPI.COMM_WORLD
@@ -92,6 +94,8 @@ def segment_subvols_pixels():
     threads = int(no_of_threads/1)
     # Allow Ilastik to use all available memory of the server/compute node.
     ram = int(ram_size)
+    threads = 1
+    ram = int(ram/16)
     # if not enough memory stop processing. Required memory is subvolume size times 4 bytes times
     # number of labeled classed plus two.
     mem_required = il_sub_vol_x * il_sub_vol_y * il_sub_vol_z * (len(get_ilastik_labels()) + 2) * 4
@@ -167,6 +171,14 @@ def segment_subvols_pixels():
         segment_time = time.time()
         create_segmented_subvol(subvol_data, subvol_pixel_masks, dsname, orig_idx_data, rightoverlap_data, leftoverlap_data)
         print("time to time to segement pixels is %d sec and rank is %d" % ((time.time() - mask_time), rank))
+        # Save cell probability map in a file if user has asked for it.
+        savemap, label_index = save_prob_map()
+        if savemap == True:
+            # Save probability map
+            labeld_obj = get_ilastik_labels()
+            print("Saving probability map for object type %s, rank is %d" % (labeld_obj[label_index], rank))
+            save_ilastik_prob_map(probability_maps, label_index, dsname, orig_idx_data,
+                                  rightoverlap_data, leftoverlap_data)
     
     end_time = int(time.time())
     exec_time = end_time - start_time
