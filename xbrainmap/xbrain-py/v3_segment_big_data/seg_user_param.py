@@ -50,7 +50,7 @@ Specify segmentation project data in this file.
 
 Must specify the subvolume dimensions, TIFF file location/directory,
 full path to Ilastik training data file, number of threads and percentage
-of memory  to be used by an Ilastik python process, and whether or not to
+of memory to be used by an Ilastik python process, and whether or not to
 save cell probably map for cell object class.
 """
 
@@ -96,12 +96,13 @@ no_of_threads_to_use = ''
 no_of_threads_to_use = '4'
 
 '''
-Specify prencentage of memory to be used by Ilastik.
+Specify percentage of memory to be used by Ilastik.
 If want 25% to be used then:
-no_of_threads_to_use = '25'
+percent_mem_to_use = '25'
 If want all memory to be used then leave it blank:
-no_of_threads_to_use = ''
+percent_mem_to_use = ''
 '''
 percent_mem_to_use = '25'
 
+# Whether to save cell probability map.
 save_cell_prob_map = 'yes'
