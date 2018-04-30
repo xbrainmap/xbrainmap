@@ -48,8 +48,10 @@
 """
 Specify segmentation project data in this file.
 
-Must specify the subvolume dimensions, TIFF file location and training
-data file location in this file
+Must specify the subvolume dimensions, TIFF file location/directory,
+full path to Ilastik training data file, number of threads and percentage
+of memory  to be used by an Ilastik python process, and whether or not to
+save cell probably map for cell object class.
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -65,16 +67,18 @@ User should specify the following info:
 1) The sub-volume dimensions: il_sub_vol_x (number of slices), il_sub_vol_y (columns) and il_sub_vol_z (rows)
 2) tiff_files_location - the full path to the directory containing TIFF image files.
 3) classifier - the full path to the directory containing the Ilastik trained data file.
-4) save_cell_prob_map - save cell probability map? 
+4) Number of threads to be used by an Ilastik classifier python process.
+5) Precentage of available memory in a server to be used by an Ilastik classifier python process.
+6) save_cell_prob_map - save cell probability map? 
 '''
 
 # Subvolume dimensions for breaking up the volume image.
 # il_sub_vol_x = number of slices
 # il_sub_vol_y = number of columns
 # il_sub_vol_z = number of rows
-il_sub_vol_x = 1536
-il_sub_vol_y = 1455
-il_sub_vol_z = 2060
+il_sub_vol_x = 400
+il_sub_vol_y = 400
+il_sub_vol_z = 600
 
 # Specify full path to the reconstructed image tiff files directory
 tiff_files_location = '/projects/mousebrain/recon_rot34_crop_cc'
@@ -82,4 +86,22 @@ tiff_files_location = '/projects/mousebrain/recon_rot34_crop_cc'
 # Specify full path to the Ilastik trained data file.
 classifier = '/projects/classifiers/v1_4xmouse_train_data.ilp'
 
-save_cell_prob_map = 'NO'
+'''
+Specify number of threads to be used by Ilastik. For example:
+If want four threads to be used then:
+no_of_threads_to_use = '4'
+If want all threads to be used then leave it blank:
+no_of_threads_to_use = ''
+'''
+no_of_threads_to_use = '4'
+
+'''
+Specify prencentage of memory to be used by Ilastik.
+If want 25% to be used then:
+no_of_threads_to_use = '25'
+If want all memory to be used then leave it blank:
+no_of_threads_to_use = ''
+'''
+percent_mem_to_use = '25'
+
+save_cell_prob_map = 'yes'

@@ -90,12 +90,20 @@ def segment_subvols_pixels():
     size = MPI.COMM_WORLD.Get_size()
     name = MPI.Get_processor_name()
     start_time = int(time.time())
-    # Allow Ilatisk to use all available threads of the server/compute node.
-    threads = int(no_of_threads/1)
-    # Allow Ilastik to use all available memory of the server/compute node.
-    ram = int(ram_size)
-    threads = 1
-    ram = int(ram/16)
+    
+    # Determine how many threads to be used by an Ilastik python process.
+    if not no_of_threads_to_use:
+        # Use all available threads
+        threads = no_of_threads
+    else:
+        threads = int(no_of_threads_to_use)
+    # Determine how much memory to be used by an Ilastik python process.
+    if not percent_mem_to_use:
+        # Use all available memory
+        ram = int(ram_size)
+    else:
+        ram = int(ram_size * (int(percent_mem_to_use)/100.0))
+    
     # if not enough memory stop processing. Required memory is subvolume size times 4 bytes times
     # number of labeled classed plus two.
     mem_required = il_sub_vol_x * il_sub_vol_y * il_sub_vol_z * (len(get_ilastik_labels()) + 2) * 4

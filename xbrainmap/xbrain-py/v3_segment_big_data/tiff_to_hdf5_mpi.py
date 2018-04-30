@@ -98,6 +98,11 @@ def tiff_to_hdf5_files():
     parent_dir, tiff_dir = os.path.split(tiff_files_location)
     hdf_dir = parent_dir + '/' + tiff_dir + '_' + 'mpi' + '_hdf'
     
+    # if there is no tiff return.
+    if not files:
+        print("**** Did not find any TIFF file, terminating execution ****")
+        return
+    
     # Remove all *.hdf5 files from previous runs. Create directory if it does not exist
     if rank == 0:
         print("**** File location is ****", hdf_dir)
