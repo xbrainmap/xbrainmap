@@ -122,10 +122,3 @@ def save_prob_map():
             
     return (save_to_file, index)
 
-
-
-
-
-
-
-

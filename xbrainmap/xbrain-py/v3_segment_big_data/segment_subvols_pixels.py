@@ -90,7 +90,6 @@ def segment_subvols_pixels():
     size = MPI.COMM_WORLD.Get_size()
     name = MPI.Get_processor_name()
     start_time = int(time.time())
-    
     # Determine how many threads to be used by an Ilastik python process.
     if not no_of_threads_to_use:
         # Use all available threads
@@ -124,13 +123,11 @@ def segment_subvols_pixels():
     if rank == 0:
         print("Sub-Volume file location is %s" % outimage_file_location)
         # Remove sub-volume files from previous run
-        '''
         if os.path.exists(outimage_file_location):
             subvolfiles = glob(outimage_file_location + '/subvol*.h5')
             for subfile in subvolfiles:
                 print("*** Removing file ***", subfile)
                 os.remove(subfile)
-        '''
         # Create the directory for segmented sub-volume images if it does not exist. 
         if not os.path.exists(outimage_file_location):
             print("*** Creating directory %s ***" % outimage_file_location)

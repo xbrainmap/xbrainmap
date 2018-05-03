@@ -92,7 +92,6 @@ def tiff_to_hdf5_files():
     rank = comm.Get_rank()
     size = MPI.COMM_WORLD.Get_size()
     name = MPI.Get_processor_name()
-    
     start_time = int(time.time())
     files = sorted(glob(tiff_files_location + '/*.tif*'))
     parent_dir, tiff_dir = os.path.split(tiff_files_location)
