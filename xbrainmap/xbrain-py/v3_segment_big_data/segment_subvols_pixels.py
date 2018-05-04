@@ -174,7 +174,9 @@ def segment_subvols_pixels():
         print("time to create pixel masks is %d sec and rank is %d" % ((time.time() - mask_time), rank))
         
         segment_time = time.time()
-        create_segmented_subvol(subvol_data, subvol_pixel_masks, dsname, orig_idx_data, rightoverlap_data, leftoverlap_data)
+        # output type - binary or pixel intensity?
+        seg_output = seg_pixel_value()
+        create_segmented_subvol(subvol_data, subvol_pixel_masks, dsname, orig_idx_data, rightoverlap_data, leftoverlap_data, seg_output)
         print("time to time to segement pixels is %d sec and rank is %d" % ((time.time() - mask_time), rank))
         # Save cell probability map in a file if user has asked for it.
         savemap, label_index = save_prob_map()

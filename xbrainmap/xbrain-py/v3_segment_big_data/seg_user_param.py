@@ -50,8 +50,9 @@ Specify segmentation project data in this file.
 
 Must specify the subvolume dimensions, TIFF file location/directory,
 full path to Ilastik training data file, number of threads and percentage
-of memory  to be used by an Ilastik python process, and whether or not to
-save cell probably map for cell object class.
+of memory  to be used by an Ilastik python process,  whether or not to
+save cell probably map for cell object class and whether or not to save
+segmented output in binary or pixel intensity.
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -70,6 +71,7 @@ User should specify the following info:
 4) Number of threads to be used by an Ilastik classifier python process.
 5) Precentage of available memory in a server to be used by an Ilastik classifier python process.
 6) save_cell_prob_map - save cell probability map? 
+7) binary_output - save segmented output in binary?
 '''
 
 # Subvolume dimensions for breaking up the volume image.
@@ -96,7 +98,7 @@ no_of_threads_to_use = '4'
 If want all threads to be used then leave it blank:
 no_of_threads_to_use = ''
 '''
-no_of_threads_to_use = ''
+no_of_threads_to_use = '4'
 
 '''
 Specify prencentage of memory to be used by Ilastik.
@@ -105,6 +107,10 @@ no_of_threads_to_use = '25'
 If want all memory to be used then leave it blank:
 no_of_threads_to_use = ''
 '''
-percent_mem_to_use = ''
+percent_mem_to_use = '50'
 
+# whether or not to save Ilastik cell probability map.
 save_cell_prob_map = 'yes'
+
+# whether to save segmented pixels in binary or pixel intensity.
+binary_output = 'yes'

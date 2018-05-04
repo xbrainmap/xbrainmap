@@ -122,3 +122,13 @@ def save_prob_map():
             
     return (save_to_file, index)
 
+def seg_pixel_value():
+    '''
+    Retuns whether to save segmented pixels in binary or pixel intensity.
+    '''
+    if binary_output.upper() == 'YES':
+        save_binary = True
+    else:
+        save_binary = False
+    return save_binary
+
