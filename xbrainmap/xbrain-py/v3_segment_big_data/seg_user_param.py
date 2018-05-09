@@ -105,9 +105,9 @@ no_of_threads_to_use = '4'
 '''
 Specify prencentage of memory to be used by Ilastik.
 If want 25% to be used then:
-no_of_threads_to_use = '25'
+percent_mem_to_use = '25'
 If want all memory to be used then leave it blank:
-no_of_threads_to_use = ''
+percent_mem_to_use = ''
 '''
 percent_mem_to_use = '50'
 
