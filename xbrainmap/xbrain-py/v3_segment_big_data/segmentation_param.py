@@ -106,16 +106,23 @@ def get_ilastik_labels():
     return labels
 
 
-def save_prob_map():
+def save_prob_map(label):
     '''
     This function returns whether to save Ilastik cell probability map to file or not.
     '''
     index = 0
     save_to_file = False
-    if save_cell_prob_map.upper() == 'YES':
+    if label == 'CELL':
+        save_class = save_cell_prob_map
+    elif label == 'VESSEL':
+        save_class = save_vessel_prob_map
+    else:
+        return (save_to_file, index)
+    
+    if save_class.upper() == 'YES':
         labels = get_ilastik_labels()
         for item in labels:
-            if 'CELL' in item.upper():
+            if label in item.upper():
                 save_to_file = True
                 index = labels.index(item)
                 break
