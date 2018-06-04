@@ -95,8 +95,10 @@ def combine_subvols_prob_map():
     volume_ds_shape[0] = volshape[1]
     volume_ds_shape[1] = volshape[3]
     volume_ds_shape[2] = volshape[5]
-    # Get the list of segmented datasets 
-    seg_ds_list = f.keys()
+    # Get the list of segmented datasets
+    seg_ds_list = []
+    for ds in f.keys():
+        seg_ds_list.append(ds)
     if rank == 0:
         print("segmentation DS list is seg_ds_list", seg_ds_list)
     seg_ds_list.remove('orig_indices')

@@ -118,4 +118,4 @@ save_cell_prob_map = 'yes'
 save_vessel_prob_map = 'yes'
 
 # whether to save segmented pixels in binary or pixel intensity.
-binary_output = 'yes'
+binary_output = 'no'

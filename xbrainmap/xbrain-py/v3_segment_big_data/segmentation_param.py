@@ -79,6 +79,9 @@ outimage_file_location = tiff_files_location + '_pixels_maps'
 # Segmented pixel volume directory - contains one hdf5 file with a datasets for each segmented class.
 volume_map_file_location = tiff_files_location + '_volume_prob_maps'
 
+# Post segmentation image volume files.
+post_seg_volume_location = tiff_files_location + '_post_segmentation'
+
 # Dataset name for Ilastik probability map for classified classes.
 ilastik_ds_name = 'exported_data'
 
@@ -86,6 +89,10 @@ no_of_threads = multiprocessing.cpu_count()
 ram_size = int(virtual_memory().total/(1024**3)) * 1000
 
 ilp_file_name = classifier
+
+# small size objects to be removed from cell segmentation
+MINSZ_CELL = 100
+
 import h5py
 import pdb
 
