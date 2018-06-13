@@ -93,6 +93,9 @@ ilp_file_name = classifier
 # small size objects to be removed from cell segmentation
 MINSZ_CELL = 100
 
+# small size objects to be removed from vessel segmentation
+MINSZ_VESSEL = 500
+
 import h5py
 import pdb
 
@@ -119,13 +122,13 @@ def save_prob_map(label):
     '''
     index = 0
     save_to_file = False
+    label = label.upper()
     if label == 'CELL':
         save_class = save_cell_prob_map
     elif label == 'VESSEL':
         save_class = save_vessel_prob_map
     else:
         return (save_to_file, index)
-    
     if save_class.upper() == 'YES':
         labels = get_ilastik_labels()
         for item in labels:
