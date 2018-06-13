@@ -141,3 +141,20 @@ Below is the sequence of commands to enter if "paralle HDF5" is not available. T
 
 *\5. mpirun –np 4 python combine_segmented_subvols.py*
 
+
+Post Segmentation Processing
+----------------------------
+After Segmentation of the volume image has completed, two scripts are available which could be used to improve the volume image quality for cell and vessel classes if they are labeled.
+
+**\1. cell_seg_post_proc.py - cell segmentation post processing. This script runs on cell class dataset if it exists. It runs on segmented sub-volumes and creates a new volume image.**
+
+*Run it in MPI mode for big dataset (hundreds giga bytes): mpirun -np 8 python cell_seg_post_proc.py*
+
+*For small size dataset may run it in a single thread: python cell_seg_post_proc.py*
+
+**\2. vessel_seg_post_proc.py - vessel segmentation post processing. This script runs on vessel class dataset if it exists. It runs on segmented sub-volumes and creates a new volume image.**
+
+*Run it in MPI mode for big dataset (hundreds giga bytes): mpirun -np 8 python vessel_seg_post_proc.py*
+
+*For small size dataset may run it in a single thread: python vessel_seg_post_proc.py*
+
